@@ -11,7 +11,7 @@ class PointnetSAModuleMSG(_PointnetSAModuleBase)
    
 1- class _PointnetSAModuleBase(nn.Module) -> forward: 
 
-1-1 First:
+1-1 Farthest Point Sampling:
    a. Takes point cloud xyz (B, N, 3) [and features (B, C, N)], 
    b. Applies FPS then gather_operation. output: new_xyz (B, npoint, 3)
    c. In FPS it selects subsets of the point cloud (indices) and marks it (output) as non_differentiable.
@@ -26,7 +26,7 @@ class PointnetSAModuleMSG(_PointnetSAModuleBase)
        grad_features = _ext.gather_points_grad(grad_out.contiguous(), idx, N)
        return grad_features, None   
 
-1-2 class QueryAndGroup(nn.Module) -> forward:
+1-2 Partitioning and extracting features from each partion. class QueryAndGroup(nn.Module) -> forward:
    a. Takes xyz, sampled_xyz or centers of balls (new_xyz) and features.
    b. Applies ball_query(self.radius, self.nsample, xyz, new_xyz) and it outputs:
          new_features : (B, 3 + C, npoint, self.nsample) tensor with the indicies of the features that form the query balls
@@ -144,7 +144,7 @@ g. Return new_xyz and new_features
     )
   ))
   
-3- Finall self.fc_layer are applied on the features to get cls scores
+3- Finall self.fc_layer are applied on the final features to get cls scores
 
 
 **Explaining the flow of Pointnet2 for cls task, msg mode:**
