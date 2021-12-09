@@ -11,7 +11,7 @@ class PointnetSAModuleMSG(_PointnetSAModuleBase)
    
 1- class _PointnetSAModuleBase(nn.Module) -> forward: 
 
-1-1 Farthest Point Sampling:
+1-1 Farthest Point Sampling for selecting centers of the balls for the next step:
    a. Takes point cloud xyz (B, N, 3) [and features (B, C, N)], 
    b. Applies FPS then gather_operation. output: new_xyz (B, npoint, 3)
    c. In FPS it selects subsets of the point cloud (indices) and marks it (output) as non_differentiable.
