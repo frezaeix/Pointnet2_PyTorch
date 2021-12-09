@@ -80,7 +80,64 @@ f. d and e can be repeated n times.
 
 g. Return new_xyz and new_features
 
-3- 1 and 2 can be repeated n times. In the last time GroupAll is called instead of QueryAndGroup.
+3- 1 and 2 can be repeated n times. In the last time GroupAll is called instead of QueryAndGroup (cls-ssg example):
+
+::
+
+  (0): PointnetSAModule(
+    (groupers): ModuleList(
+      (0): QueryAndGroup()
+    )
+    (mlps): ModuleList(
+      (0): Sequential(
+        (0): Conv2d(6, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(64, eps=1e-05, momentum=0.5, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+        (3): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (4): BatchNorm2d(64, eps=1e-05, momentum=0.5, affine=True, track_running_stats=True)
+        (5): ReLU(inplace=True)
+        (6): Conv2d(64, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (7): BatchNorm2d(128, eps=1e-05, momentum=0.5, affine=True, track_running_stats=True)
+        (8): ReLU(inplace=True)
+      )
+    )
+  )
+  (1): PointnetSAModule(
+    (groupers): ModuleList(
+      (0): QueryAndGroup()
+    )
+    (mlps): ModuleList(
+      (0): Sequential(
+        (0): Conv2d(131, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(128, eps=1e-05, momentum=0.5, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+        (3): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (4): BatchNorm2d(128, eps=1e-05, momentum=0.5, affine=True, track_running_stats=True)
+        (5): ReLU(inplace=True)
+        (6): Conv2d(128, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (7): BatchNorm2d(256, eps=1e-05, momentum=0.5, affine=True, track_running_stats=True)
+        (8): ReLU(inplace=True)
+      )
+    )
+  )
+  (2): PointnetSAModule(
+    (groupers): ModuleList(
+      (0): GroupAll()
+    )
+    (mlps): ModuleList(
+      (0): Sequential(
+        (0): Conv2d(259, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(256, eps=1e-05, momentum=0.5, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+        (3): Conv2d(256, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (4): BatchNorm2d(512, eps=1e-05, momentum=0.5, affine=True, track_running_stats=True)
+        (5): ReLU(inplace=True)
+        (6): Conv2d(512, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (7): BatchNorm2d(1024, eps=1e-05, momentum=0.5, affine=True, track_running_stats=True)
+        (8): ReLU(inplace=True)
+      )
+    )
+  ))
 
 Original Readme by the authors of Pointnet2/Pointnet++ PyTorch
 ============================
