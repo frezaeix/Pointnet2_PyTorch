@@ -53,6 +53,8 @@ Explaining the flow of Pointnet2
 
         return grad_features, torch.zeros_like(idx)
    
+   
+   
    d. Applies GroupingOperation: grouping_operation(features, idx).
    e. Return: 
    
