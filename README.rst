@@ -148,6 +148,7 @@ g. Return new_xyz and new_features
 
 
 **Explaining the flow of Pointnet2 for cls task, msg mode:**
+Compare pointnet2_msg_cls.py with pointnet2_ssg_cls.py to understand differences.
 
 
 Original Readme by the authors of Pointnet2/Pointnet++ PyTorch
