@@ -143,6 +143,10 @@ g. Return new_xyz and new_features
   
 4- Finall self.fc_layer are applied on the features to get cls scores
 
+
+**Explaining the flow of Pointnet2 for cls task, msg mode:**
+
+
 Original Readme by the authors of Pointnet2/Pointnet++ PyTorch
 ============================
 
