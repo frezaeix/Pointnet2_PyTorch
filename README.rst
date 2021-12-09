@@ -52,7 +52,7 @@ Explaining the flow of Pointnet2
         grad_features = _ext.group_points_grad(grad_out.contiguous(), idx, N)
 
         return grad_features, torch.zeros_like(idx)
-   
+::   
    
    
    d. Applies GroupingOperation: grouping_operation(features, idx).
