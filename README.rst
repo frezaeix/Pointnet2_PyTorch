@@ -56,11 +56,14 @@ Explaining the flow of Pointnet2
    
 d. Applies GroupingOperation: grouping_operation(features, idx).
 e. Return: 
-   
+  
+  
  ::
+ 
    new_features = torch.cat(
                     [grouped_xyz, grouped_features], dim=1
                 )  # (B, C + 3, npoint, nsample)
+
 
 
 Original Readme by the authors of Pointnet2/Pointnet++ PyTorch
