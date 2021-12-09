@@ -26,7 +26,7 @@ Explaining the flow of Pointnet2
    b. Applies ball_query(self.radius, self.nsample, xyz, new_xyz) and it outputs:
          new_features : (B, 3 + C, npoint, self.nsample) tensor with the indicies of the features that form the query balls
          It marks the output as non_differentiable.
-   c. Applies GroupingOperation. This operation is similar to GatherOperation. It saves indices for the backward pass. Backward for this node:
+   c. Applies GroupingOperation: grouping_operation(xyz_trans, idx). This operation is similar to GatherOperation. It saves indices for the backward pass. Backward for this node:
 
 ::
 
@@ -52,7 +52,15 @@ Explaining the flow of Pointnet2
         grad_features = _ext.group_points_grad(grad_out.contiguous(), idx, N)
 
         return grad_features, torch.zeros_like(idx)
-
+   
+   d. Applies GroupingOperation: grouping_operation(features, idx).
+   e. Return: 
+   
+ ::
+ 
+   new_features = torch.cat(
+                    [grouped_xyz, grouped_features], dim=1
+                )  # (B, C + 3, npoint, nsample)
 
 
 Original Readme by the authors of Pointnet2/Pointnet++ PyTorch
