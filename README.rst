@@ -59,10 +59,7 @@ e. Return:
   
   
  ::
- 
-   new_features = torch.cat(
-                    [grouped_xyz, grouped_features], dim=1
-                )  # (B, C + 3, npoint, nsample)
+   new_features = torch.cat( [grouped_xyz, grouped_features], dim=1 )  # (B, C + 3, npoint, nsample)
 
 
 
