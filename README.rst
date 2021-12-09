@@ -3,9 +3,11 @@ My Own Readme
 **Explaining the flow of Pointnet2 for cls task, ssg mode:**
 
 
-0- class PointnetSAModule(PointnetSAModuleMSG)
-   class PointnetSAModuleMSG(_PointnetSAModuleBase)
-
+0- Main epoch loop 
+   
+class PointnetSAModule(PointnetSAModuleMSG)
+class PointnetSAModuleMSG(_PointnetSAModuleBase)
+   
 1- class _PointnetSAModuleBase(nn.Module) -> forward: 
    a. Takes point cloud xyz (B, N, 3) [and features (B, C, N)], 
    b. Applies FPS then gather_operation. output: new_xyz (B, npoint, 3)
@@ -138,6 +140,8 @@ g. Return new_xyz and new_features
       )
     )
   ))
+  
+4- Finall self.fc_layer are applied on the features to get cls scores
 
 Original Readme by the authors of Pointnet2/Pointnet++ PyTorch
 ============================
