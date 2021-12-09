@@ -61,6 +61,22 @@ e. Return:
 
    new_features = torch.cat( [grouped_xyz, grouped_features], dim=1 )  # (B, C + 3, npoint, nsample)
 
+f. Applies MLPs:
+
+::
+
+   Sequential(
+  (0): Conv2d(6, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  (1): BatchNorm2d(64, eps=1e-05, momentum=0.5, affine=True, track_running_stats=True)
+  (2): ReLU(inplace=True)
+  (3): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  (4): BatchNorm2d(64, eps=1e-05, momentum=0.5, affine=True, track_running_stats=True)
+  (5): ReLU(inplace=True)
+  (6): Conv2d(64, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  (7): BatchNorm2d(128, eps=1e-05, momentum=0.5, affine=True, track_running_stats=True)
+  (8): ReLU(inplace=True)
+)
+
 
 3- class QueryAndGroup(nn.Module) -> forward:
 
