@@ -19,6 +19,7 @@ def backward(ctx, grad_out):
     N = features.size(2)
     grad_features = _ext.gather_points_grad(grad_out.contiguous(), idx, N)
     return grad_features, None   
+::
 
 
 2- class QueryAndGroup(nn.Module) -> forward:
