@@ -62,6 +62,7 @@ e. Return:
    new_features = torch.cat( [grouped_xyz, grouped_features], dim=1 )  # (B, C + 3, npoint, nsample)
 
 
+3- class QueryAndGroup(nn.Module) -> forward:
 
 Original Readme by the authors of Pointnet2/Pointnet++ PyTorch
 ============================
