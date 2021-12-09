@@ -12,6 +12,7 @@ class PointnetSAModuleMSG(_PointnetSAModuleBase)
    d. In gather_operation it saves indices for the backward pass. There is a specific backward for this node.
 
 ::
+
    @staticmethod
    def backward(ctx, grad_out):
       idx, features = ctx.saved_tensors
