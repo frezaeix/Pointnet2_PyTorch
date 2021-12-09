@@ -18,7 +18,7 @@ class PointnetSAModuleMSG(_PointnetSAModuleBase)
         grad_features = _ext.gather_points_grad(grad_out.contiguous(), idx, N)
         return grad_features, None
 ```
-3- class QueryAndGroup(nn.Module) -> forward:
+2- class QueryAndGroup(nn.Module) -> forward:
    a. Takes xyz, sampled_xyz (new_xyz) and features.
    b. Applies ball_query(self.radius, self.nsample, xyz, new_xyz).
    c. Outputs new_features : (B, 3 + C, npoint, nsample)
