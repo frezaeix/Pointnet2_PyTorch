@@ -1,6 +1,6 @@
 My Own Readme 
 -----
-Explaining the flow of Pointnet2
+**Explaining the flow of Pointnet2 for cls task, ssg mode:**
 
 
 0- class PointnetSAModule(PointnetSAModuleMSG)
@@ -54,14 +54,13 @@ Explaining the flow of Pointnet2
         return grad_features, torch.zeros_like(idx)
  
    
-d. Applies GroupingOperation: grouping_operation(features, idx).
-e. Return:   
+d. Applies GroupingOperation: grouping_operation(features, idx) and it returns: 
   
 ::
 
    new_features = torch.cat( [grouped_xyz, grouped_features], dim=1 )  # (B, C + 3, npoint, nsample)
 
-f. Applies MLPs:
+e. Applies MLPs on new_features:
 
 ::
 
@@ -74,11 +73,14 @@ f. Applies MLPs:
   (5): ReLU(inplace=True)
   (6): Conv2d(64, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
   (7): BatchNorm2d(128, eps=1e-05, momentum=0.5, affine=True, track_running_stats=True)
-  (8): ReLU(inplace=True)
-)
+  (8): ReLU(inplace=True))
 
 
-3- class QueryAndGroup(nn.Module) -> forward:
+f. d and e can be repeated n times.
+
+g. Return new_xyz and new_features
+
+3- 1 and 2 can be repeated n times. In the last time GroupAll is called instead of QueryAndGroup.
 
 Original Readme by the authors of Pointnet2/Pointnet++ PyTorch
 ============================
