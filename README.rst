@@ -10,22 +10,48 @@ Explaining the flow of Pointnet2
    a. Takes point cloud xyz (B, N, 3) [and features (B, C, N)], 
    b. Applies FPS then gather_operation. output: new_xyz (B, npoint, 3)
    c. In FPS it selects subsets of the point cloud (indices) and marks it (output) as non_differentiable.
-   d. In gather_operation it saves indices for the backward pass. There is a specific backward for this node.
+   d. In GatherOperation it saves indices for the backward pass. There is a specific backward for this node:
 
 ::
 
    @staticmethod
    def backward(ctx, grad_out):
-      idx, features = ctx.saved_tensors
-      N = features.size(2)
-      grad_features = _ext.gather_points_grad(grad_out.contiguous(), idx, N)
-      return grad_features, None   
+       idx, features = ctx.saved_tensors
+       N = features.size(2)
+       grad_features = _ext.gather_points_grad(grad_out.contiguous(), idx, N)
+       return grad_features, None   
 
 2- class QueryAndGroup(nn.Module) -> forward:
-   a. Takes xyz, sampled_xyz (new_xyz) and features.
-   b. Applies ball_query(self.radius, self.nsample, xyz, new_xyz).
-   c. Outputs new_features : (B, 3 + C, npoint, nsample)
-   
+   a. Takes xyz, sampled_xyz or centers of balls (new_xyz) and features.
+   b. Applies ball_query(self.radius, self.nsample, xyz, new_xyz) and it outputs:
+         new_features : (B, 3 + C, npoint, self.nsample) tensor with the indicies of the features that form the query balls
+         It marks the output as non_differentiable.
+   c. Applies GroupingOperation. This operation is similar to GatherOperation. It saves indices for the backward pass. Backward for this node:
+
+::
+
+    @staticmethod
+    def backward(ctx, grad_out):
+        # type: (Any, torch.tensor) -> Tuple[torch.Tensor, torch.Tensor]
+        r"""
+
+        Parameters
+        ----------
+        grad_out : torch.Tensor
+            (B, C, npoint, nsample) tensor of the gradients of the output from forward
+
+        Returns
+        -------
+        torch.Tensor
+            (B, C, N) gradient of the features
+        None
+        """
+        idx, features = ctx.saved_tensors
+        N = features.size(2)
+
+        grad_features = _ext.group_points_grad(grad_out.contiguous(), idx, N)
+
+        return grad_features, torch.zeros_like(idx)
 
 
 
