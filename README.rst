@@ -1,4 +1,32 @@
-Pointnet2/Pointnet++ PyTorch
+# My Own Readme 
+Explaining the flow of Pointnet2
+
+class PointnetSAModule(PointnetSAModuleMSG)
+class PointnetSAModuleMSG(_PointnetSAModuleBase)
+1- class _PointnetSAModuleBase(nn.Module) -> forward: 
+   a. Takes point cloud xyz (B, N, 3) [and features (B, C, N)], 
+   b. Applies FPS then gather_operation. output: new_xyz (B, npoint, 3)
+   c. In FPS it selects subsets of the point cloud (indices) and marks it (output) as non_differentiable.
+   d. In gather_operation it saves indices for the backward pass. There is a specific backward for this node.
+   ```
+   @staticmethod
+    def backward(ctx, grad_out):
+        idx, features = ctx.saved_tensors
+        N = features.size(2)
+        grad_features = _ext.gather_points_grad(grad_out.contiguous(), idx, N)
+        return grad_features, None
+   ```
+3- class QueryAndGroup(nn.Module) -> forward:
+   a. Takes xyz, sampled_xyz (new_xyz) and features.
+   b. Applies ball_query(self.radius, self.nsample, xyz, new_xyz).
+   c. Outputs new_features : (B, 3 + C, npoint, nsample)
+   
+
+```
+```
+
+
+Original Readme by the authors of Pointnet2/Pointnet++ PyTorch
 ============================
 
 
