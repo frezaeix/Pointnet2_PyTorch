@@ -2,8 +2,9 @@ My Own Readme
 -----
 Explaining the flow of Pointnet2
 
-class PointnetSAModule(PointnetSAModuleMSG)
-class PointnetSAModuleMSG(_PointnetSAModuleBase)
+
+0- class PointnetSAModule(PointnetSAModuleMSG)
+   class PointnetSAModuleMSG(_PointnetSAModuleBase)
 
 1- class _PointnetSAModuleBase(nn.Module) -> forward: 
    a. Takes point cloud xyz (B, N, 3) [and features (B, C, N)], 
